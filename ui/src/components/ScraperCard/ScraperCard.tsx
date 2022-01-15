@@ -53,16 +53,16 @@ function ScraperCard() {
                     </Grid>
                     <Grid item xs={5}>
                         <PriceWrapper>
-                            <Label variant="body2">Latest Price</Label>
+                            <Label variant="body2">Lowest Price</Label>
                             <PriceTextWrapper>
-                                <CurrencySymbol>£</CurrencySymbol>156
+                                <CurrencySymbol>£</CurrencySymbol>110
                             </PriceTextWrapper>
                         </PriceWrapper>
                     </Grid>
                 </Grid>
             </StyledCardContent>
             <StyledCardActions>
-                <Button size="small">Details</Button>
+                <Button>Details</Button>
             </StyledCardActions>
         </Card>
     )

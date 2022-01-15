@@ -2,15 +2,13 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import ScraperCard from "../../components/ScraperCard";
 
-const Wrapper = styled("div")(({ theme }) => ({
-    padding: theme.spacing()
-}))
+import Wrapper from "../../components/Styled/Wrapper";
 
 function Home() {
     return (
-        <Wrapper>
+        <Wrapper maxWidth="md">
             <Grid container spacing={2}>
-                <Grid item sm={4} md={3}>
+                <Grid item xs={12} sm={4}>
                     <ScraperCard />
                 </Grid>
             </Grid>

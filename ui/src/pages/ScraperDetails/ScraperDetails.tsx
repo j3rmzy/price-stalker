@@ -1,0 +1,127 @@
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
+import Wrapper from "../../components/Styled/Wrapper";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+
+const ProductImage = styled("img")`
+    width: 100%;
+    max-width: 100%;
+    border-radius: 10px;
+`
+
+const ProductSummaryWrapper = styled("div")`
+    display: flex;
+    flex-direction: column;
+`
+
+const ProductName = styled(Typography)(({ theme }) => ({
+    marginTop: theme.spacing(2),
+    fontWeight: 600
+}));
+
+const ProductPrice = styled(Typography)`
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+`;
+
+const CurrencySymbol = styled("span")`
+    font-weight: 400;
+    font-size: 0.875rem;
+`
+
+const ProductScraperDates = styled("div")(({ theme }) => ({
+    backgroundColor: theme.palette.grey["300"],
+    padding: theme.spacing(),
+    margin: `${theme.spacing(1.5)} 0`,
+}))
+
+const ProductDate = styled(Typography)`
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    color: #333;
+`
+
+const ScraperDetailsPanel = styled(Paper)(({ theme }) => ({
+    paddingTop: theme.spacing(2),
+}));
+
+const ScraperDetailsPanelInner = styled("div")(({ theme }) => ({
+    padding: `0 ${theme.spacing(2)} ${theme.spacing(1)}`
+}));
+
+const ScraperDetailsPanelInnerRight = styled(ScraperDetailsPanelInner)`
+    text-align: right;
+`
+
+const ScraperDetailsPanelLabel = styled(Typography)`
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #333;
+`;
+const ScraperDetailsPanelWebsite = styled(Typography)`
+    font-size: 1.2rem;
+`;
+const ScraperDetailsPanelPrice = styled(Typography)`
+    text-align: right;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.2;
+`;
+const ScraperDetailsPanelFooter = styled("div")(({ theme }) => ({
+    display: "flex",
+    padding: theme.spacing(),
+    justifyContent: "flex-end",
+    backgroundColor: "#f4f4f4"
+
+}))
+
+function ScraperDetails() {
+    return (
+        <Wrapper maxWidth="md">
+            <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                    <ProductSummaryWrapper>
+                        <ProductImage src="https://i8.amplience.net/i/jpl/jd_464981_a?qlt=92&w=750&h=531&v=1&fmt=auto" />
+                        <ProductName variant="h5" component="h1">Adidas NMD R1</ProductName>
+                        <ProductPrice>
+                            <CurrencySymbol>£</CurrencySymbol>110
+                        </ProductPrice>
+                    </ProductSummaryWrapper>
+                    <ProductScraperDates>
+                        <ProductDate>Date Created: 01/01/1970</ProductDate>
+                        <ProductDate>Last Scrape: 01/01/1970</ProductDate>
+                    </ProductScraperDates>
+                    <Button variant="contained">Check prices</Button>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <ScraperDetailsPanel>
+                        <Grid container>
+                            <Grid item xs={6}>
+                                <ScraperDetailsPanelInner>
+                                    <ScraperDetailsPanelLabel>Website</ScraperDetailsPanelLabel>
+                                    <ScraperDetailsPanelWebsite>JD Sports</ScraperDetailsPanelWebsite>
+                                </ScraperDetailsPanelInner>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <ScraperDetailsPanelInnerRight>
+                                    <ScraperDetailsPanelLabel>Price</ScraperDetailsPanelLabel>
+                                    <ScraperDetailsPanelPrice>£110</ScraperDetailsPanelPrice>
+                                </ScraperDetailsPanelInnerRight>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <ScraperDetailsPanelFooter>
+                                    <Button>Go to website</Button>
+                                </ScraperDetailsPanelFooter>
+                            </Grid>
+                        </Grid>
+                    </ScraperDetailsPanel>
+                </Grid>
+            </Grid>
+        </Wrapper>
+    )
+}
+
+export default ScraperDetails;
