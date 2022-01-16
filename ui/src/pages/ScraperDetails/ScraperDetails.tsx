@@ -6,8 +6,8 @@ import Wrapper from "../../components/Styled/Wrapper";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { getLowestPrice } from "../../utils";
-import { useNavigate } from "react-router-dom";
-import { WindowSharp } from "@mui/icons-material";
+import { getScraper } from "../../data";
+import { useParams } from "react-router-dom";
 
 const ProductImage = styled("img")`
     width: 100%;
@@ -83,30 +83,12 @@ const ScraperDetailsPanelFooter = styled("div")(({ theme }) => ({
 
 }))
 
-const data = {
-    id: "1",
-    productName: "Adidas NMD R1",
-    productImage: "https://i8.amplience.net/i/jpl/jd_464981_a?qlt=92&w=750&h=531&v=1&fmt=auto",
-    productScrapers: [
-        {
-            productWebsiteName: "JD Sports",
-            productWebsiteURL: "https://www.jdsports.co.uk/product/adidas-originals-nmdr1-og/16169166/",
-            productPrice: 110
-        }, {
-            productWebsiteName: "Adidas UK",
-            productWebsiteURL: "",
-            productPrice: 70
-        }
-    ],
-    dateCreated: Date.now(),
-    dateLastChecked: new Date("12/05/2000")
-}
-
-const dateCreateString = new Date(data.dateCreated).toLocaleString();
-
-const handleClick = (url: string) => window.open(url);
 
 function ScraperDetails() {
+    const data = getScraper();
+    const dateCreateString = new Date(data.dateCreated).toLocaleString();
+    const handleClick = (url: string) => window.open(url);
+
     return (
         <Wrapper maxWidth="md">
             <Grid container spacing={2}>

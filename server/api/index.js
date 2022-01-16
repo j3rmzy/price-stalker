@@ -1,4 +1,5 @@
 const scrapersMockData = require('../../mocks/scrapers.json');
+const scraperMockData = require('../../mocks/scraper.json');
 const express = require('express');
 const app = express();
 const port = 5000;
@@ -17,6 +18,12 @@ app.get('/scrapers', (req, res) => {
         data: scrapersMockData
     })
 });
+
+app.get('/scrapers/:id', (req, res) => {
+    res.send({
+        data: scraperMockData
+    })
+})
 
 app.post('/scrapers', (req, res) => {
     res.send('POST scraper to DB')

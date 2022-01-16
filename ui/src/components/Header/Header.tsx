@@ -3,10 +3,11 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import LocalAtmTwoToneIcon from '@mui/icons-material/LocalAtmTwoTone';
 import Toolbar from "@mui/material/Toolbar";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 
 const Title = styled(Typography)`
   font-weight: 600;
@@ -30,7 +31,13 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `
 
+const StyledButton = styled(Button)`
+  justify-items: flex-end;
+`
+
 function Header() {
+  let navigate = useNavigate();
+
   return (
     <>
       <Box>
@@ -38,6 +45,7 @@ function Header() {
           <Toolbar variant="dense">
             <StyledLocalAtmTwoToneIcon />
             <Title><StyledLink to="/scrapers">Price Stalker</StyledLink></Title>
+            <StyledButton onClick={() => navigate("add")}>Add Product</StyledButton>
           </Toolbar>
         </StyledAppBar>
       </Box>

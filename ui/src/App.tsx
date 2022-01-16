@@ -3,6 +3,7 @@ import "./App.css";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import ScraperDetails from "./pages/ScraperDetails";
+import AddProduct from "./pages/AddProduct";
 import {
   Routes,
   Route,
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Header />}>
             <Route path="/scrapers" element={<Home />} />
             <Route path="/scrapers/:id" element={<ScraperDetails />} />
+            <Route path="add" element={<AddProduct />} />
             <Route
               path="*"
               element={

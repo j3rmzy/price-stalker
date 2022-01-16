@@ -1,3 +1,4 @@
+import scraperData from "../../../mocks/scraper.json";
 import scrapersData from "../../../mocks/scrapers.json";
 
 export interface IProduct {
@@ -15,3 +16,5 @@ export interface IProductScrapers {
 }
 
 export const getScrapers = () => scrapersData;
+
+export const getScraper = () => scraperData;
