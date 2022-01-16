@@ -8,7 +8,7 @@ import { getLowestPrice } from "../../utils";
 
 const Scrapers = [
     {
-        id: 1,
+        id: "1",
         productName: "Adidas NMD R1",
         productImage: "https://i8.amplience.net/i/jpl/jd_464981_a?qlt=92&w=750&h=531&v=1&fmt=auto",
         productScrapers: [

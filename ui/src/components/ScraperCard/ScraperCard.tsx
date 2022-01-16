@@ -6,7 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-location";
+import { useNavigate } from "react-router-dom";
 
 const StyledCardActions = styled(CardActions)`
     justify-content: flex-end
@@ -47,12 +47,8 @@ interface IScraperCard {
 }
 
 function ScraperCard({ id, productName, productImage, productLowestPrice }: IScraperCard): JSX.Element {
-    
-    
-    const handleClick = () => {
+    let navigate = useNavigate();
 
-    }
-    
     return (
         <Card>
             <CardMedia
@@ -76,8 +72,7 @@ function ScraperCard({ id, productName, productImage, productLowestPrice }: IScr
                 </Grid>
             </StyledCardContent>
             <StyledCardActions>
-                <Link to={id}>Details</Link>
-                {/* <Button component={Link} href={id}>Details</Button> */}
+                <Button onClick={() => navigate(id)}>Details</Button>
             </StyledCardActions>
         </Card>
     )
