@@ -1,9 +1,11 @@
+import { v4 as uuid } from "uuid";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import Wrapper from "../../components/Styled/Wrapper";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import { getLowestPrice } from "../../utils";
 
 const ProductImage = styled("img")`
     width: 100%;
@@ -46,6 +48,7 @@ const ProductDate = styled(Typography)`
 
 const ScraperDetailsPanel = styled(Paper)(({ theme }) => ({
     paddingTop: theme.spacing(2),
+    marginBottom: theme.spacing(),
 }));
 
 const ScraperDetailsPanelInner = styled("div")(({ theme }) => ({
@@ -78,46 +81,68 @@ const ScraperDetailsPanelFooter = styled("div")(({ theme }) => ({
 
 }))
 
+const data = {
+    productName: "Adidas NMD R1",
+    productImage: "https://i8.amplience.net/i/jpl/jd_464981_a?qlt=92&w=750&h=531&v=1&fmt=auto",
+    productScrapers: [
+        {
+            productWebsiteName: "JD Sports",
+            productWebsiteURL: "https://www.jdsports.co.uk/product/adidas-originals-nmdr1-og/16169166/",
+            productPrice: 110
+        }, {
+            productWebsiteName: "Adidas UK",
+            productWebsiteURL: "",
+            productPrice: 70
+        }
+    ],
+    dateCreated: Date.now(),
+    dateLastChecked: new Date("12/05/2000")
+}
+
+const dateCreateString = new Date(data.dateCreated).toLocaleString();
+
 function ScraperDetails() {
     return (
         <Wrapper maxWidth="md">
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                     <ProductSummaryWrapper>
-                        <ProductImage src="https://i8.amplience.net/i/jpl/jd_464981_a?qlt=92&w=750&h=531&v=1&fmt=auto" />
-                        <ProductName variant="h5" component="h1">Adidas NMD R1</ProductName>
+                        <ProductImage src={data.productImage} />
+                        <ProductName variant="h5" component="h1">{data.productName}</ProductName>
                         <ProductPrice>
-                            <CurrencySymbol>£</CurrencySymbol>110
+                            <CurrencySymbol>£</CurrencySymbol>{getLowestPrice(data.productScrapers)}
                         </ProductPrice>
                     </ProductSummaryWrapper>
                     <ProductScraperDates>
-                        <ProductDate>Date Created: 01/01/1970</ProductDate>
-                        <ProductDate>Last Scrape: 01/01/1970</ProductDate>
+                        <ProductDate>Date Created: {dateCreateString}</ProductDate>
+                        <ProductDate>Last Scrape: {data.dateLastChecked.toLocaleString()}</ProductDate>
                     </ProductScraperDates>
                     <Button variant="contained">Check prices</Button>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <ScraperDetailsPanel>
-                        <Grid container>
-                            <Grid item xs={6}>
-                                <ScraperDetailsPanelInner>
-                                    <ScraperDetailsPanelLabel>Website</ScraperDetailsPanelLabel>
-                                    <ScraperDetailsPanelWebsite>JD Sports</ScraperDetailsPanelWebsite>
-                                </ScraperDetailsPanelInner>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <ScraperDetailsPanelInnerRight>
-                                    <ScraperDetailsPanelLabel>Price</ScraperDetailsPanelLabel>
-                                    <ScraperDetailsPanelPrice>£110</ScraperDetailsPanelPrice>
-                                </ScraperDetailsPanelInnerRight>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ScraperDetailsPanelFooter>
-                                    <Button>Go to website</Button>
-                                </ScraperDetailsPanelFooter>
-                            </Grid>
-                        </Grid>
-                    </ScraperDetailsPanel>
+                        {data.productScrapers.map((scraper) => (
+                            <ScraperDetailsPanel key={uuid()}>
+                                <Grid container>
+                                    <Grid item xs={6}>
+                                        <ScraperDetailsPanelInner>
+                                            <ScraperDetailsPanelLabel>Website</ScraperDetailsPanelLabel>
+                                            <ScraperDetailsPanelWebsite>{scraper.productWebsiteName}</ScraperDetailsPanelWebsite>
+                                        </ScraperDetailsPanelInner>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <ScraperDetailsPanelInnerRight>
+                                            <ScraperDetailsPanelLabel>Price</ScraperDetailsPanelLabel>
+                                            <ScraperDetailsPanelPrice>£{scraper.productPrice}</ScraperDetailsPanelPrice>
+                                        </ScraperDetailsPanelInnerRight>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <ScraperDetailsPanelFooter>
+                                            <Button onClick={() => console.log(scraper.productWebsiteURL)}>Go to website</Button>
+                                        </ScraperDetailsPanelFooter>
+                                    </Grid>
+                                </Grid>
+                            </ScraperDetailsPanel>
+                        ))}
                 </Grid>
             </Grid>
         </Wrapper>

@@ -38,24 +38,30 @@ const StyledCardContent = styled(CardContent)`
     padding-bottom: 0;
 `
 
-function ScraperCard() {
+interface IScraperCard {
+    productName: string,
+    productImage: string,
+    productLowestPrice: number
+}
+
+function ScraperCard({ productName, productImage, productLowestPrice }: IScraperCard): JSX.Element {
     return (
         <Card>
             <CardMedia
                 component="img"
-                image="https://i8.amplience.net/i/jpl/jd_464981_a?qlt=92&w=750&h=531&v=1&fmt=auto"
+                image={productImage}
             />
             <StyledCardContent>
                 <Grid container>
                     <Grid item xs={7}>
                         <Label variant="body2">Item</Label>
-                        <Typography>Adidas NMD R1</Typography>
+                        <Typography>{productName}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <PriceWrapper>
                             <Label variant="body2">Lowest Price</Label>
                             <PriceTextWrapper>
-                                <CurrencySymbol>£</CurrencySymbol>110
+                                <CurrencySymbol>£</CurrencySymbol>{productLowestPrice}
                             </PriceTextWrapper>
                         </PriceWrapper>
                     </Grid>

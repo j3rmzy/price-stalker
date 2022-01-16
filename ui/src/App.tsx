@@ -2,6 +2,7 @@ import { styled } from "@mui/material/styles";
 import "./App.css";
 import Header from "./components/Header";
 import Home from "./pages/Home";
+import ScraperDetails from "./pages/ScraperDetails";
 
 const SiteContainer = styled('div')`
   display: flex;
