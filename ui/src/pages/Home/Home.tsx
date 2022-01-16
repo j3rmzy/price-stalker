@@ -8,6 +8,7 @@ import { getLowestPrice } from "../../utils";
 
 const Scrapers = [
     {
+        id: 1,
         productName: "Adidas NMD R1",
         productImage: "https://i8.amplience.net/i/jpl/jd_464981_a?qlt=92&w=750&h=531&v=1&fmt=auto",
         productScrapers: [
@@ -33,9 +34,10 @@ function Home() {
     return (
         <Wrapper maxWidth="md">
             <Grid container spacing={2}>
-                {Scrapers.map(({ productName, productImage, productScrapers }) => (
+                {Scrapers.map(({ id, productName, productImage, productScrapers }) => (
                     <Grid key={uuid()} item xs={12} sm={4}>
                         <ScraperCard
+                            id={id}
                             productName={productName}
                             productImage={productImage}
                             productLowestPrice={getLowestPrice(productScrapers) as number}

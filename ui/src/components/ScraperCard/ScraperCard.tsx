@@ -6,6 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
+import { Link } from "react-location";
 
 const StyledCardActions = styled(CardActions)`
     justify-content: flex-end
@@ -39,12 +40,19 @@ const StyledCardContent = styled(CardContent)`
 `
 
 interface IScraperCard {
+    id: number,
     productName: string,
     productImage: string,
     productLowestPrice: number
 }
 
-function ScraperCard({ productName, productImage, productLowestPrice }: IScraperCard): JSX.Element {
+function ScraperCard({ id, productName, productImage, productLowestPrice }: IScraperCard): JSX.Element {
+    
+    
+    const handleClick = () => {
+
+    }
+    
     return (
         <Card>
             <CardMedia
@@ -68,7 +76,8 @@ function ScraperCard({ productName, productImage, productLowestPrice }: IScraper
                 </Grid>
             </StyledCardContent>
             <StyledCardActions>
-                <Button>Details</Button>
+                <Link to={id}>Details</Link>
+                {/* <Button component={Link} href={id}>Details</Button> */}
             </StyledCardActions>
         </Card>
     )
