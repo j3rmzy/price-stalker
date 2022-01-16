@@ -40,7 +40,7 @@ const StyledCardContent = styled(CardContent)`
 `
 
 interface IScraperCard {
-    id: number,
+    id: string,
     productName: string,
     productImage: string,
     productLowestPrice: number

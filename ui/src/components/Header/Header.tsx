@@ -6,6 +6,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 
+import { Outlet, Link } from "react-router-dom";
+
 const Title = styled(Typography)`
   font-weight: 600;
   text-transform: uppercase;
@@ -23,16 +25,24 @@ const StyledLocalAtmTwoToneIcon = styled(LocalAtmTwoToneIcon)`
   fill: #333;
 `
 
+const StyledLink = styled(Link)`
+  color: #333;
+  text-decoration: none;
+`
+
 function Header() {
   return (
-    <Box>
-      <StyledAppBar position="static">
-        <Toolbar variant="dense">
-          <StyledLocalAtmTwoToneIcon />
-          <Title>Price Stalker</Title>
-        </Toolbar>
-      </StyledAppBar>
-    </Box>
+    <>
+      <Box>
+        <StyledAppBar position="static">
+          <Toolbar variant="dense">
+            <StyledLocalAtmTwoToneIcon />
+            <Title><StyledLink to="/scrapers">Price Stalker</StyledLink></Title>
+          </Toolbar>
+        </StyledAppBar>
+      </Box>
+      <Outlet />
+    </>
   )
 }
 

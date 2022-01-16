@@ -18,11 +18,20 @@ const SiteContainer = styled('div')`
 function App() {
   return (
     <SiteContainer>
-      <Header />
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/:id" element={<ScraperDetails />} />
+          <Route path="/" element={<Header />}>
+            <Route path="/scrapers" element={<Home />} />
+            <Route path="/scrapers/:id" element={<ScraperDetails />} />
+            <Route
+              path="*"
+              element={
+                <div>
+                  Sorry! Page is not found
+                </div>
+              }
+            />
+          </Route>
         </Routes>
       </main>
     </SiteContainer>

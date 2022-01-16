@@ -6,6 +6,8 @@ import Wrapper from "../../components/Styled/Wrapper";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { getLowestPrice } from "../../utils";
+import { useNavigate } from "react-router-dom";
+import { WindowSharp } from "@mui/icons-material";
 
 const ProductImage = styled("img")`
     width: 100%;
@@ -102,6 +104,8 @@ const data = {
 
 const dateCreateString = new Date(data.dateCreated).toLocaleString();
 
+const handleClick = (url: string) => window.open(url);
+
 function ScraperDetails() {
     return (
         <Wrapper maxWidth="md">
@@ -111,7 +115,7 @@ function ScraperDetails() {
                         <ProductImage src={data.productImage} />
                         <ProductName variant="h5" component="h1">{data.productName}</ProductName>
                         <ProductPrice>
-                            <CurrencySymbol>£</CurrencySymbol>{getLowestPrice(data.productScrapers)}
+                            <CurrencySymbol>£</CurrencySymbol>{getLowestPrice(data.productScrapers as [])}
                         </ProductPrice>
                     </ProductSummaryWrapper>
                     <ProductScraperDates>
@@ -138,7 +142,7 @@ function ScraperDetails() {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <ScraperDetailsPanelFooter>
-                                            <Button onClick={() => console.log(scraper.productWebsiteURL)}>Go to website</Button>
+                                            <Button onClick={() => handleClick(scraper.productWebsiteURL)}>Go to website</Button>
                                         </ScraperDetailsPanelFooter>
                                     </Grid>
                                 </Grid>
