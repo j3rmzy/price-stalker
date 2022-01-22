@@ -5,13 +5,15 @@ import {
     FormControl,
     TextField,
     Typography,
-    Button 
+    Button, 
+    InputLabel,
+    InputBase
 } from "@mui/material"
 import { styled } from "@mui/material/styles";
-import ScraperDetails from "../ScraperDetails";
+import { useForm } from "react-hook-form";
 
 const StyledFormControl = styled(FormControl)`
-    margin-top: 8px;
+    margin: 8px 0;
 `
 
 const StyledButton = styled(Button)`
@@ -19,7 +21,6 @@ const StyledButton = styled(Button)`
 
 const AddProductInputWrapper = styled("div")(({ theme }) => ({
     backgroundColor: theme.palette.grey["300"],
-    padding: theme.spacing(),
     marginTop: theme.spacing(),
     marginBottom: theme.spacing(2),
     borderRadius: 4,
@@ -34,6 +35,7 @@ const StyledScraperDetailsWrapper = styled("div")`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0.875rem;
 `
 
 const StyledScraperDetailsTitle = styled(Typography)`
@@ -46,21 +48,39 @@ const StyledForm = styled("form")`
     flex-direction: column;
 `
 
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    border: `1px solid ${theme.palette.grey[400]}`,
+    backgroundColor: theme.palette.common.white,
+    borderRadius: 3,
+    "& input": {
+        padding: "0.875rem"
+    }
+}));
+
+const StyledLabel = styled(InputLabel)(({ theme }) => ({
+    transform: "none",
+    position: "relative",
+    marginBottom: theme.spacing(0.5)
+}))
+
 const ScraperDetailWrapper = styled("div")(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     borderTop: `1px dotted ${theme.palette.grey["500"]}`,
-    marginTop: theme.spacing(),
-    paddingTop: theme.spacing(2),
-    marginBottom: theme.spacing(),
+    padding: theme.spacing(2),
 
     "& div:first-of-type": {
         marginTop: 0,
     }
-}))
+}));
+
+const ButtonWrapper = styled("div")`
+    display: inline-flex;
+    justify-content: flex-end;
+`;
 
 export default function AddProduct() {
-    // const [addNew, setAddNew] = useState(false);
+    const { register, handleSubmit } = useForm();
     const [newScrapers, setNewScrapers] = useState([]);
 
     const handleClick = () => {
@@ -74,31 +94,26 @@ export default function AddProduct() {
         setNewScrapers([...newScrapers, newScraper]);
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Submit Form")
+    const onSubmit = (data) => {
+        console.log(data);
     }
-
-    console.log(newScrapers);
 
     return (
         <Wrapper maxWidth="md">
             <Typography variant="h6" component="h1">Add Product</Typography>
-            <StyledForm onSubmit={e =>handleSubmit(e)}>
+            <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <StyledFormControl>
-                    <StyledTextField
-                        variant="outlined"
-                        name="productName"
+                    <StyledLabel shrink htmlFor="productName">Product Name</StyledLabel>
+                    <StyledInputBase
                         id="productName"
-                        label="Product Name"
+                        {...register("productName")}
                     />
                 </StyledFormControl>
                 <StyledFormControl>
-                    <StyledTextField
-                        variant="outlined"
-                        name="productImage"
+                    <StyledLabel shrink htmlFor="productImage">Product Image</StyledLabel>
+                    <StyledInputBase
                         id="productImage"
-                        label="Product Image"
+                        {...register("productImage")}
                     />
                 </StyledFormControl>
                 <AddProductInputWrapper>
@@ -109,26 +124,26 @@ export default function AddProduct() {
                     {newScrapers.map((newScraper, i) => (
                         <ScraperDetailWrapper key={uuid()}>
                             <StyledFormControl>
-                                <StyledTextField
-                                    variant="outlined"
-                                    name={`productWebsite-${i}`}
+                                <StyledLabel shrink htmlFor={`productWebsite-${i}`}>Product Image</StyledLabel>
+                                <StyledInputBase
                                     id={`productWebsite-${i}`}
-                                    label="Website To Scrape"
+                                    {...register(`productWebsite-${i}`)}
                                 />
                             </StyledFormControl>
                             <StyledFormControl>
-                                <StyledTextField
-                                    variant="outlined"
-                                    name={`productPrice-${i}`}
-                                    id={`productPrice-${i}`}
-                                    label="Price Selector"
-                                />
+                                <StyledLabel shrink htmlFor={`productPrice-${i}`}>Price Selector</StyledLabel>
+                                    <StyledInputBase
+                                        id={`productPrice-${i}`}
+                                        {...register(`productPrice-${i}`)}
+                                    />
                             </StyledFormControl>
                         </ScraperDetailWrapper>
                     ))}
                 </AddProductInputWrapper>
+                <ButtonWrapper>
+                    <Button type="submit" color="primary" variant="contained">Save Product</Button>
+                </ButtonWrapper>
             </StyledForm>
-            <Button type="submit" color="primary" variant="contained">Save Product</Button>
         </Wrapper>
     )
 }
