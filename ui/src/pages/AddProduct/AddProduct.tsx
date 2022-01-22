@@ -124,7 +124,7 @@ export default function AddProduct() {
                     {newScrapers.map((newScraper, i) => (
                         <ScraperDetailWrapper key={uuid()}>
                             <StyledFormControl>
-                                <StyledLabel shrink htmlFor={`productWebsite-${i}`}>Product Image</StyledLabel>
+                                <StyledLabel shrink htmlFor={`productWebsite-${i}`}>Website Name</StyledLabel>
                                 <StyledInputBase
                                     id={`productWebsite-${i}`}
                                     {...register(`productWebsite-${i}`)}
