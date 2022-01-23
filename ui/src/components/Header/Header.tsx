@@ -1,4 +1,3 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import LocalAtmTwoToneIcon from '@mui/icons-material/LocalAtmTwoTone';
@@ -37,15 +36,15 @@ const StyledButton = styled(Button)`
 
 function Header() {
   let navigate = useNavigate();
-
+  
   return (
     <>
       <Box>
         <StyledAppBar position="static">
           <Toolbar variant="dense">
             <StyledLocalAtmTwoToneIcon />
-            <Title><StyledLink to="/scrapers">Price Stalker</StyledLink></Title>
-            <StyledButton onClick={() => navigate("add")}>Add Product</StyledButton>
+            <Title><StyledLink to="/products">Price Stalker</StyledLink></Title>
+            <StyledButton onClick={() => navigate("/products/add")}>Add Product</StyledButton>
           </Toolbar>
         </StyledAppBar>
       </Box>

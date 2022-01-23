@@ -1,17 +1,22 @@
 const scrapersMockData = require('../../mocks/scrapers.json');
 const scraperMockData = require('../../mocks/scraper.json');
 const express = require('express');
+const cors = require('cors');
+const routes = require('../api/routes');
 const app = express();
 
 const mongoose = require("mongoose");
 
 mongoose
-    .connect("mongodb://localhost:27017/price-stalker")
+    .connect("mongodb://localhost:27017/price-stalker", { useNewUrlParser: true })
     .then(() => {
         const app = express();
         const port = 5000;
     
         app.use(express.json());
+        app.use(cors());
+        app.use('/api', routes);
+        
 
         app.listen(port, () => {
             console.log(`Price Stalker API listening on port: ${port}`)

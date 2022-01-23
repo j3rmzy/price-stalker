@@ -7,6 +7,8 @@ import AddProduct from "./pages/AddProduct";
 import {
   Routes,
   Route,
+  BrowserRouter as Router,
+  Navigate,
 } from "react-router-dom";
 
 const SiteContainer = styled('div')`
@@ -18,13 +20,15 @@ const SiteContainer = styled('div')`
 
 function App() {
   return (
-    <SiteContainer>
-      <main>
-        <Routes>
-          <Route path="/" element={<Header />}>
-            <Route path="/scrapers" element={<Home />} />
-            <Route path="/scrapers/:id" element={<ScraperDetails />} />
-            <Route path="add" element={<AddProduct />} />
+    <Router>
+      <SiteContainer>
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={<Navigate to="/products" />} />
+            <Route path="/products" element={<Home />} />
+            <Route path="/products/:id" element={<ScraperDetails />} />
+            <Route path="/products/add" element={<AddProduct />} />
             <Route
               path="*"
               element={
@@ -33,10 +37,10 @@ function App() {
                 </div>
               }
             />
-          </Route>
-        </Routes>
-      </main>
-    </SiteContainer>
+          </Routes>
+        </main>
+      </SiteContainer>
+    </Router>
   )
 }
 

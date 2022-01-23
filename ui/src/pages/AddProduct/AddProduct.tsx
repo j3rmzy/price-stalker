@@ -79,6 +79,20 @@ const ButtonWrapper = styled("div")`
     justify-content: flex-end;
 `;
 
+async function postData(formData) {
+    const response = await fetch('http://localhost:5000/api/products', {
+        method: 'POST',
+        cache: "no-cache",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    });
+
+    return response.json();
+}
+
+
 export default function AddProduct() {
     const { register, handleSubmit } = useForm();
     const [newScrapers, setNewScrapers] = useState([]);
@@ -94,8 +108,14 @@ export default function AddProduct() {
         setNewScrapers([...newScrapers, newScraper]);
     }
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log(data);
+        const formObj = {
+            productName: data.productName,
+            productImage: data.productImage
+        }
+
+        postData(formObj);
     }
 
     return (
