@@ -108,15 +108,22 @@ export default function AddProduct() {
         setNewScrapers([...newScrapers, newScraper]);
     }
 
-    const onSubmit = async (data) => {
-        console.log(data);
-        const formObj = {
-            productName: data.productName,
-            productImage: data.productImage
-        }
+    const onSubmit = ({ productImage, productName, ...rest }) => {
+        const scrapers = [...newScrapers];
+        const newData = [];
 
-        postData(formObj);
-    }
+        scrapers.forEach(scraper => {
+            const s = Object.keys(scraper).reduce((acc, key) => {
+                return key.includes('productWebsite')
+                    ? { ...acc, website: rest[key]}
+                    : { ...acc, price: rest[key]}          
+            }, {})
+
+            newData.push(s);
+        })
+
+        console.log(newData);
+    };
 
     return (
         <Wrapper maxWidth="md">
@@ -151,10 +158,10 @@ export default function AddProduct() {
                                 />
                             </StyledFormControl>
                             <StyledFormControl>
-                                <StyledLabel shrink htmlFor={`productPrice-${i}`}>Price Selector</StyledLabel>
+                                <StyledLabel shrink htmlFor={`priceSelector-${i}`}>Price Selector</StyledLabel>
                                     <StyledInputBase
-                                        id={`productPrice-${i}`}
-                                        {...register(`productPrice-${i}`)}
+                                        id={`priceSelector-${i}`}
+                                        {...register(`priceSelector-${i}`)}
                                     />
                             </StyledFormControl>
                         </ScraperDetailWrapper>
