@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import Wrapper from "../../components/Styled/Wrapper"
 import {
@@ -11,6 +11,8 @@ import {
 } from "@mui/material"
 import { styled } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
+
+import { postData } from "../../requests";
 
 const StyledFormControl = styled(FormControl)`
     margin: 8px 0;
@@ -79,28 +81,25 @@ const ButtonWrapper = styled("div")`
     justify-content: flex-end;
 `;
 
-async function postData(formData) {
-    const response = await fetch('http://localhost:5000/api/products', {
-        method: 'POST',
-        cache: "no-cache",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-    });
-
-    return response.json();
+export interface IFormData {
+    productName: string,
+    productImage: string,
+    scrapeWebsites: IScrapeWebsites[]
 }
 
+interface IScrapeWebsites {
+    website?: string,
+    priceSelector?: string
+}
 
 export default function AddProduct() {
-    const { register, handleSubmit } = useForm();
-    const [newScrapers, setNewScrapers] = useState([]);
+    const { register, handleSubmit, reset } = useForm();
+    const [newScrapers, setNewScrapers] = useState<IScrapeWebsites[]>([]);
 
     const handleClick = () => {
         const scrapersLength = newScrapers.length;
 
-        let newScraper = {
+        let newScraper: any = {
             [`productWebsite-${scrapersLength}`]: "",
             [`priceSelector-${scrapersLength}`]: "",
         }
@@ -108,21 +107,39 @@ export default function AddProduct() {
         setNewScrapers([...newScrapers, newScraper]);
     }
 
-    const onSubmit = ({ productImage, productName, ...rest }) => {
+    const onSubmit = (data: IFormData) => {
+        const { productImage, productName, ...rest } = data;
         const scrapers = [...newScrapers];
-        const newData = [];
+        const scrapeWebsitesData: Object[] = [];
 
         scrapers.forEach(scraper => {
             const s = Object.keys(scraper).reduce((acc, key) => {
                 return key.includes('productWebsite')
                     ? { ...acc, website: rest[key]}
-                    : { ...acc, price: rest[key]}          
+                    : { ...acc, priceSelector: rest[key]}          
             }, {})
 
-            newData.push(s);
+            scrapeWebsitesData.push(s);
         })
 
-        console.log(newData);
+        const productData: IFormData = {
+            productName,
+            productImage,
+            scrapeWebsites: scrapeWebsitesData
+        }
+
+        const clearData = Object.keys(data).reduce((acc, key) => {
+            return { ...acc, [key]: '' }
+        }, {});
+
+        postData(productData)
+            .then(() => {
+                reset({ ...clearData });
+                console.log('Redirect to details page')
+            })
+            .catch(error => {
+                console.error(error)
+            })
     };
 
     return (

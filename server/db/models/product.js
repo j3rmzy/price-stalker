@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema({
     productImage: String,
     scrapeWebsites: [{
         website: String,
-        price: Number
+        priceSelector: String
     }],
     dateCreated: Date,
     lastDateScraped: Date,
