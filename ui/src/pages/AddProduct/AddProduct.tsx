@@ -81,7 +81,7 @@ const ButtonWrapper = styled("div")`
     justify-content: flex-end;
 `;
 
-export interface IFormData {
+interface IProductData {
     productName: string,
     productImage: string,
     scrapeWebsites: IScrapeWebsites[]
@@ -107,22 +107,22 @@ export default function AddProduct() {
         setNewScrapers([...newScrapers, newScraper]);
     }
 
-    const onSubmit = (data: IFormData) => {
+    const onSubmit = (data: Record<string, string>) => {
         const { productImage, productName, ...rest } = data;
         const scrapers = [...newScrapers];
         const scrapeWebsitesData: Object[] = [];
 
         scrapers.forEach(scraper => {
-            const s = Object.keys(scraper).reduce((acc, key) => {
+            const s: IScrapeWebsites = Object.keys(scraper).reduce((acc, key) => {
                 return key.includes('productWebsite')
                     ? { ...acc, website: rest[key]}
-                    : { ...acc, priceSelector: rest[key]}          
+                    : { ...acc, priceSelector: rest[key]}
             }, {})
 
             scrapeWebsitesData.push(s);
         })
 
-        const productData: IFormData = {
+        const productData: IProductData = {
             productName,
             productImage,
             scrapeWebsites: scrapeWebsitesData
