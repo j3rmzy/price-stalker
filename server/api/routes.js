@@ -23,4 +23,11 @@ router.post('/products', async (req, res) => {
     // //res.send *report findings to front end res.send(.....)
 })
 
+
+router.get('/products/:id', async (req, res) => {
+  Product.findById(req.params.id, (err, data) => {
+    res.send(data);
+  });
+})
+
 module.exports = router;

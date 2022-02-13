@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import { getLowestPrice } from "../../utils";
 import { getScraper } from "../../data";
 import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const ProductImage = styled("img")`
     width: 100%;
@@ -83,56 +84,73 @@ const ScraperDetailsPanelFooter = styled("div")(({ theme }) => ({
 
 }))
 
+async function getProduct(id: string | undefined) {
+  const res = await fetch(`http://localhost:5000/api/products/${id}`);
+  const data = await res.json();
+  return data;
+}
 
 function ScraperDetails() {
+    const { id } = useParams();
+    const [product, setProduct] = useState({});
     const data = getScraper();
     const dateCreateString = new Date(data.dateCreated).toLocaleString();
     const handleClick = (url: string) => window.open(url);
 
+    useEffect(() => {
+      getProduct(id)
+        .then(data => setProduct(data));
+    }, [])
+
     return (
+      <>
+        {product && (
+          
         <Wrapper maxWidth="md">
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                     <ProductSummaryWrapper>
-                        <ProductImage src={data.productImage} />
-                        <ProductName variant="h5" component="h1">{data.productName}</ProductName>
+                        <ProductImage src={product.productImage} />
+                        <ProductName variant="h5" component="h1">{product.productName}</ProductName>
                         <ProductPrice>
-                            <CurrencySymbol>£</CurrencySymbol>{getLowestPrice(data.productScrapers as [])}
+                            {/* <CurrencySymbol>£</CurrencySymbol>{getLowestPrice(product.scrapeWebsites as [])} */}
                         </ProductPrice>
                     </ProductSummaryWrapper>
                     <ProductScraperDates>
                         <ProductDate>Date Created: {dateCreateString}</ProductDate>
-                        <ProductDate>Last Scrape: {data.dateLastChecked.toLocaleString()}</ProductDate>
+                        <ProductDate>Last Scrape: {product?.lastDateScraped?.toLocaleString() || "Not scraped"}</ProductDate>
                     </ProductScraperDates>
                     <Button variant="contained">Check prices</Button>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                        {data.productScrapers.map((scraper) => (
-                            <ScraperDetailsPanel key={uuid()}>
-                                <Grid container>
-                                    <Grid item xs={6}>
-                                        <ScraperDetailsPanelInner>
-                                            <ScraperDetailsPanelLabel>Website</ScraperDetailsPanelLabel>
-                                            <ScraperDetailsPanelWebsite>{scraper.productWebsiteName}</ScraperDetailsPanelWebsite>
-                                        </ScraperDetailsPanelInner>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <ScraperDetailsPanelInnerRight>
-                                            <ScraperDetailsPanelLabel>Price</ScraperDetailsPanelLabel>
-                                            <ScraperDetailsPanelPrice>£{scraper.productPrice}</ScraperDetailsPanelPrice>
-                                        </ScraperDetailsPanelInnerRight>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <ScraperDetailsPanelFooter>
-                                            <Button onClick={() => handleClick(scraper.productWebsiteURL)}>Go to website</Button>
-                                        </ScraperDetailsPanelFooter>
-                                    </Grid>
-                                </Grid>
-                            </ScraperDetailsPanel>
-                        ))}
-                </Grid>
+                {/* <Grid item xs={12} sm={6}>
+                  {product.productScrapers.map((scraper) => (
+                      <ScraperDetailsPanel key={uuid()}>
+                          <Grid container>
+                              <Grid item xs={6}>
+                                  <ScraperDetailsPanelInner>
+                                      <ScraperDetailsPanelLabel>Website</ScraperDetailsPanelLabel>
+                                      <ScraperDetailsPanelWebsite>{scraper.productWebsiteName}</ScraperDetailsPanelWebsite>
+                                  </ScraperDetailsPanelInner>
+                              </Grid>
+                              <Grid item xs={6}>
+                                  <ScraperDetailsPanelInnerRight>
+                                      <ScraperDetailsPanelLabel>Price</ScraperDetailsPanelLabel>
+                                      <ScraperDetailsPanelPrice>£{scraper.productPrice}</ScraperDetailsPanelPrice>
+                                  </ScraperDetailsPanelInnerRight>
+                              </Grid>
+                              <Grid item xs={12}>
+                                  <ScraperDetailsPanelFooter>
+                                      <Button onClick={() => handleClick(scraper.productWebsiteURL)}>Go to website</Button>
+                                  </ScraperDetailsPanelFooter>
+                              </Grid>
+                          </Grid>
+                      </ScraperDetailsPanel>
+                  ))}
+                </Grid> */}
             </Grid>
         </Wrapper>
+        )}
+      </>
     )
 }
 

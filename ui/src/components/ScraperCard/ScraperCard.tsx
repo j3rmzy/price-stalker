@@ -49,6 +49,8 @@ interface IScraperCard {
 function ScraperCard({ id, productName, productImage, productLowestPrice }: IScraperCard): JSX.Element {
     let navigate = useNavigate();
 
+    console.log(id);
+
     return (
         <Card>
             <CardMedia

@@ -10,7 +10,7 @@ import { IProductScrapers } from "../../data";
 import { useEffect } from "react";
 
 interface ProductProps {
-    id: string,
+    _id: string,
     productName: string,
     productImage: string,
     productScrapers: IProductScrapers[]
@@ -34,10 +34,10 @@ function Home() {
     return (
         <Wrapper maxWidth="md">
             <Grid container spacing={2}>
-                {products && products.map(({ id, productName, productImage, productScrapers }: ProductProps) => (
+                {products && products.map(({ _id, productName, productImage, productScrapers, ...rest }: ProductProps) => (
                     <Grid key={uuid()} item xs={12} sm={4}>
                         <ScraperCard
-                            id={id}
+                            id={_id}
                             productName={productName}
                             productImage={productImage}
                             productLowestPrice={10}
