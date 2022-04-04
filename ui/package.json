@@ -5,7 +5,9 @@
     "start": "npm run dev",
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "echo 'run tests'",
+    "lint": "echo 'run linting'"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
